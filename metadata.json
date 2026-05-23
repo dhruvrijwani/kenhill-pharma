@@ -1,0 +1,6 @@
+{
+  "name": "Ken Hill Pharma Limited",
+  "description": "A trusted senior pharmaceutical trading company specializing in Active Pharmaceutical Ingredients (APIs), high-purity drug intermediates, and specialized chemical/microbiological reagents.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

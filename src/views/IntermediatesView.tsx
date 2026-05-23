@@ -1,0 +1,142 @@
+import React from 'react';
+import { intermediatesData } from '../data/intermediates';
+import { ChevronRight, FileSpreadsheet, Search, ArrowRight, Info, Check, Beaker } from 'lucide-react';
+import AnimatedSection from '../components/AnimatedSection';
+
+interface IntermediatesViewProps {
+  navigate: (view: string, searchParams?: Record<string, string>) => void;
+}
+
+export default function IntermediatesView({ navigate }: IntermediatesViewProps) {
+  return (
+    <div className="relative pt-24 pb-20 overflow-hidden">
+      {/* Background Subtle Wave Particles */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-20 bg-[radial-gradient(#1A3A6B_1px,transparent_1px)] [background-size:24px_24px]"></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12">
+        {/* VIEW HEADER */}
+        <div className="border-b border-border-custom pb-8">
+          <div className="flex items-center space-x-2 text-xs text-text-muted mb-3">
+            <span className="cursor-pointer hover:text-primary" onClick={() => navigate('home')}>Home</span>
+            <ChevronRight className="w-3.5 h-3.5" />
+            <span className="text-text-dark font-medium">Drug Intermediates</span>
+          </div>
+
+          <div className="space-y-4 max-w-4xl">
+            <span className="text-xs uppercase tracking-widest text-accent font-bold">Intermediary Sourcing</span>
+            <h1 className="text-4xl font-extrabold tracking-tight text-text-dark">
+              High-Purity Drug Intermediates
+            </h1>
+            <p className="text-sm text-text-muted leading-relaxed">
+              We source and supply specialized chemical synthesis intermediates required for industrial API manufacturing. Every compound matches stringent gas or liquid chromatography purity indicators, with complete technical documentation.
+            </p>
+          </div>
+        </div>
+
+        {/* DETAILS TABLE GRID */}
+        <div className="space-y-8">
+          {intermediatesData.map((item) => (
+            <div 
+              key={item.slug} 
+              className="bg-surface border border-border-custom rounded-3xl p-6 md:p-8 hover:shadow-lg transition-shadow grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+            >
+              {/* Product specifications column */}
+              <div className="lg:col-span-4 space-y-4">
+                <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 px-3 py-1 rounded-full text-primary">
+                  <span className="text-3xs uppercase tracking-wider font-extrabold font-mono">CAS ID: {item.casNumber}</span>
+                </div>
+
+                <h3 className="text-lg font-extrabold text-text-dark leading-snug">{item.name}</h3>
+                <p className="text-xs text-text-muted leading-relaxed">{item.description}</p>
+                
+                <div className="bg-bg rounded-xl p-4 border border-border-custom/50 text-xs text-text-dark space-y-2 font-medium">
+                  <div className="flex justify-between">
+                    <span className="text-text-muted font-normal">Molecular Weight:</span>
+                    <span>{item.molecularWeight}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-text-muted font-normal">Appearance:</span>
+                    <span className="line-clamp-1">{item.specifications[0].specification}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-text-muted font-normal">Purity GC/HPLC:</span>
+                    <span className="text-primary font-bold">{item.purity}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Central Details and Table */}
+              <div className="lg:col-span-5 space-y-4">
+                <div>
+                  <h4 className="text-2xs uppercase tracking-widest text-accent font-bold mb-2">Synthesis Application</h4>
+                  <p className="text-xs text-text-dark leading-relaxed font-semibold bg-bg p-3.5 rounded-xl border border-border-custom/40">
+                    {item.intro}
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <h4 className="text-2xs uppercase tracking-widest text-accent font-bold">Impurity Profile Highlights</h4>
+                  <div className="grid grid-cols-2 gap-2 text-3xs font-semibold text-text-dark">
+                    <div className="flex items-center space-x-1.5">
+                      <Check className="w-3.5 h-3.5 text-accent flex-shrink-0" />
+                      <span>Single maximum impurity &lt; 0.1%</span>
+                    </div>
+                    <div className="flex items-center space-x-1.5">
+                      <Check className="w-3.5 h-3.5 text-accent flex-shrink-0" />
+                      <span>Total impurities &lt; 0.5%</span>
+                    </div>
+                    <div className="flex items-center space-x-1.5">
+                      <Check className="w-3.5 h-3.5 text-accent flex-shrink-0" />
+                      <span>Heavy metals &lt; 10 ppm</span>
+                    </div>
+                    <div className="flex items-center space-x-1.5">
+                      <Check className="w-3.5 h-3.5 text-accent flex-shrink-0" />
+                      <span>Sulfated ash &lt; 0.1%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sourcing and action panel column */}
+              <div className="lg:col-span-3 bg-bg border border-border-custom/50 rounded-2xl p-6 text-xs text-text-dark space-y-4 self-stretch flex flex-col justify-between">
+                <div className="space-y-4">
+                  <span className="block text-2xs uppercase tracking-wider text-accent font-bold border-b border-border-custom/50 pb-2">Packaging Standard</span>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-3xs font-bold text-text-muted">
+                      <span>PACK SIZE:</span>
+                      <span className="text-text-dark">{item.packaging.primary}</span>
+                    </div>
+                    <div className="flex justify-between text-3xs font-bold text-text-muted">
+                      <span>STORAGE:</span>
+                      <span className="text-text-dark line-clamp-1">{item.storage.conditions[0]}</span>
+                    </div>
+                    <div className="flex justify-between text-3xs font-bold text-text-muted">
+                      <span>SHELF LIFE:</span>
+                      <span className="text-text-dark">{item.storage.shelfLife}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-border-custom/50 space-y-2">
+                  <button
+                    onClick={() => navigate('api-detail', { slug: item.slug })}
+                    className="w-full bg-primary hover:bg-primary-hover text-white text-3xs font-semibold py-3 px-4 rounded-xl flex items-center justify-center space-x-1 shadow transition-transform"
+                  >
+                    <span>View Monograph Datasheet</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-white" />
+                  </button>
+                  <button
+                    onClick={() => navigate('contact', { product: item.name })}
+                    className="w-full bg-surface border border-border-custom hover:bg-border-custom text-text-dark text-3xs font-semibold py-3 px-4 rounded-xl"
+                  >
+                    Request Bulk Quotation
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
