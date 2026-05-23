@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, ChevronDown, Award, Globe, Shield, Activity, Beaker } from 'lucide-react';
+import { Menu, X, ChevronDown, Award, Globe, Shield, Activity } from 'lucide-react';
 
 interface NavbarProps {
   currentPath: string;
@@ -169,17 +169,11 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
               onClick={() => navigate('home')}
               id="nav-logo-container"
             >
-              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 text-white">
-                <Beaker className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <span className="block text-lg font-bold tracking-tight text-primary leading-tight">
-                  KEN HILL
-                </span>
-                <span className="block text-[10px] uppercase tracking-widest text-accent font-semibold leading-none">
-                  PHARMA LIMITED
-                </span>
-              </div>
+              <img
+                src="/Logo.jpeg"
+                alt="Ken Hill Pharma Limited"
+                className="h-12 w-auto object-contain"
+              />
             </div>
 
             {/* Desktop Navigation Links */}

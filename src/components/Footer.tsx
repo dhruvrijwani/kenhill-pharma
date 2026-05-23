@@ -14,18 +14,12 @@ export default function Footer({ navigate }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Column 1: Brand & Tagline */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-3 cursor-pointer" onClick={() => navigate('home')}>
-              <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center text-white font-bold">
-                KH
-              </div>
-              <div>
-                <span className="block text-lg font-bold tracking-tight text-white leading-none">
-                  KEN HILL
-                </span>
-                <span className="block text-[10px] uppercase tracking-widest text-accent font-semibold">
-                  PHARMA LIMITED
-                </span>
-              </div>
+            <div className="cursor-pointer" onClick={() => navigate('home')}>
+              <img
+                src="/Logo.jpeg"
+                alt="Ken Hill Pharma Limited"
+                className="h-12 w-auto object-contain"
+              />
             </div>
             
             <p className="text-xs text-text-muted leading-relaxed">
