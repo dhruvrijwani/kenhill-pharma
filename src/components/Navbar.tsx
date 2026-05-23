@@ -12,6 +12,10 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
+  // Mobile accordion/dropdown states
+  const [mobileExpandedSection, setMobileExpandedSection] = useState<string | null>(null);
+  const [mobileSubgroupExpanded, setMobileSubgroupExpanded] = useState<string | null>(null);
+
   // Monitor scroll height to shrink navbar and add shadow
   useEffect(() => {
     const handleScroll = () => {
@@ -128,8 +132,24 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
     navigate('product-detail', { category, slug: subcategory });
   };
 
-  const isActive = (view: string) => {
-    return currentPath === view ? 'text-primary font-semibold' : 'text-text-dark hover:text-primary';
+  const getLinkClass = (isActive: boolean) => {
+    return `relative pb-1 text-sm font-semibold tracking-wide transition-colors cursor-pointer outline-none duration-350 ${
+      isActive 
+        ? 'text-primary font-bold' 
+        : 'text-text-dark hover:text-primary font-semibold'
+    } after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:transition-transform after:duration-300 ${
+      isActive ? 'after:scale-x-100 after:bg-primary' : 'after:scale-x-0 hover:after:scale-x-100 after:bg-primary'
+    }`;
+  };
+
+  const toggleMobileExpandedSection = (section: string) => {
+    setMobileExpandedSection(mobileExpandedSection === section ? null : section);
+    // Reset secondary layer when switching primary section for visual cleanliness
+    setMobileSubgroupExpanded(null);
+  };
+
+  const toggleMobileSubgroup = (subgroup: string) => {
+    setMobileSubgroupExpanded(mobileSubgroupExpanded === subgroup ? null : subgroup);
   };
 
   return (
@@ -166,7 +186,7 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
             <div className="hidden lg:flex items-center space-x-8" id="nav-desktop-links">
               <button 
                 onClick={() => navigate('home')} 
-                className={`text-sm tracking-wide transition-colors outline-none cursor-pointer ${isActive('home')}`}
+                className={getLinkClass(currentPath === 'home')}
                 id="nav-item-home"
               >
                 Home
@@ -180,9 +200,9 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
               >
                 <button 
                   onClick={() => navigate('apis')}
-                  className={`flex items-center space-x-1 text-sm tracking-wide transition-colors cursor-pointer outline-none ${
-                    currentPath === 'apis' || (currentPath === 'api-detail' && !intermediatesList.some(i => i.slug === window.location.hash.split('slug=')[1])) ? 'text-primary font-semibold' : 'text-text-dark hover:text-primary'
-                  }`}
+                  className={`${getLinkClass(
+                    currentPath === 'apis' || (currentPath === 'api-detail' && !intermediatesList.some(i => i.slug === window.location.hash.split('slug=')[1]))
+                  )} flex items-center space-x-1 outline-none`}
                   id="nav-dropdown-apis"
                 >
                   <span>APIs</span>
@@ -229,9 +249,9 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 <button 
-                  className={`flex items-center space-x-1 text-sm tracking-wide transition-colors cursor-pointer outline-none ${
-                    currentPath === 'intermediates' || (currentPath === 'api-detail' && intermediatesList.some(i => i.slug === window.location.hash.split('slug=')[1])) ? 'text-primary font-semibold' : 'text-text-dark hover:text-primary'
-                  }`}
+                  className={`${getLinkClass(
+                    currentPath === 'intermediates' || (currentPath === 'api-detail' && intermediatesList.some(i => i.slug === window.location.hash.split('slug=')[1]))
+                  )} flex items-center space-x-1 outline-none`}
                   id="nav-dropdown-intermediates"
                 >
                   <span>Intermediates</span>
@@ -272,9 +292,9 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 <button 
-                  className={`flex items-center space-x-1 text-sm tracking-wide transition-colors cursor-pointer outline-none ${
-                    currentPath === 'products' || currentPath === 'product-detail' ? 'text-primary font-semibold' : 'text-text-dark hover:text-primary'
-                  }`}
+                  className={`${getLinkClass(
+                    currentPath === 'products' || currentPath === 'product-detail'
+                  )} flex items-center space-x-1 outline-none`}
                   id="nav-dropdown-products"
                 >
                   <span>Products</span>
@@ -317,7 +337,7 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
               {/* Company Overview (formerly About) */}
               <button 
                 onClick={() => navigate('about')} 
-                className={`text-sm tracking-wide transition-colors cursor-pointer outline-none ${isActive('about')}`}
+                className={getLinkClass(currentPath === 'about')}
                 id="nav-item-about"
               >
                 Company Overview
@@ -325,7 +345,7 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
 
               <button 
                 onClick={() => navigate('contact')} 
-                className={`text-sm tracking-wide transition-colors cursor-pointer outline-none ${isActive('contact')}`}
+                className={getLinkClass(currentPath === 'contact')}
                 id="nav-item-contact"
               >
                 Contact
@@ -366,92 +386,170 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
             className="fixed inset-0 z-40 bg-surface flex flex-col justify-between p-6 pt-24 lg:hidden shadow-2xl border-l border-border-custom overflow-y-auto"
             id="nav-mobile-drawer"
           >
-            <div className="space-y-6 max-h-[80vh] overflow-y-auto">
+            <div className="space-y-5 max-h-[80vh] overflow-y-auto pr-1">
+              {/* Home Page Link */}
               <button 
                 onClick={() => { setIsMobileMenuOpen(false); navigate('home'); }}
-                className="block text-left w-full text-base font-bold text-text-dark hover:text-primary border-b border-border-custom/50 pb-2"
+                className={`block text-left w-full text-base font-bold pb-2 border-b border-border-custom/50 ${currentPath === 'home' ? 'text-primary' : 'text-text-dark'}`}
               >
                 Home
               </button>
 
-              {/* Mobile APIs List */}
-              <div className="space-y-2">
-                <span className="block text-[10px] uppercase tracking-wider text-accent font-extrabold">Active APIs</span>
-                <div className="grid grid-cols-1 gap-2 pl-2">
-                  {apisGrouped.map((grp) => (
-                    <div key={grp.title} className="space-y-1">
-                      <span className="block text-[9px] text-text-muted font-bold uppercase">{grp.title}</span>
-                      <div className="grid grid-cols-1 gap-1 pl-1.5">
-                        {grp.items.slice(0, 4).map((i) => (
-                          <button
-                            key={i.slug}
-                            onClick={() => navToAPIDetail(i.slug)}
-                            className="block text-left text-2xs text-text-dark hover:text-primary py-0.5"
-                          >
-                            • {i.name}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                  <button
-                    onClick={() => { setIsMobileMenuOpen(false); navigate('apis'); }}
-                    className="text-left text-xs text-primary font-bold mt-1"
-                  >
-                    View All APIs →
-                  </button>
-                </div>
-              </div>
-
-              {/* Mobile Intermediates List */}
-              <div className="space-y-2 border-t border-border-custom/40 pt-4">
-                <span className="block text-[10px] uppercase tracking-wider text-accent font-extrabold">Intermediates</span>
-                <div className="flex flex-col gap-2 pl-2">
-                  {intermediatesList.map((item) => (
-                    <button
-                      key={item.slug}
-                      onClick={() => navToAPIDetail(item.slug)}
-                      className="block text-left text-xs text-text-dark hover:text-primary"
+              {/* Collapsible Mobile APIs Accordion */}
+              <div className="space-y-1.5 border-b border-border-custom/50 pb-3" id="mobile-apis-accordion">
+                <button
+                  onClick={() => toggleMobileExpandedSection('apis')}
+                  className="flex items-center justify-between w-full text-base font-bold text-text-dark hover:text-primary"
+                >
+                  <span className={currentPath === 'apis' || currentPath === 'api-detail' ? 'text-primary' : ''}>Active APIs</span>
+                  <ChevronDown className={`w-4 h-4 text-text-muted transition-transform duration-200 ${mobileExpandedSection === 'apis' ? 'rotate-180 text-primary' : ''}`} />
+                </button>
+                
+                <AnimatePresence>
+                  {mobileExpandedSection === 'apis' && (
+                    <motion.div 
+                      key="mobile-apis-content"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="pl-3 space-y-3 pt-2 overflow-hidden"
                     >
-                      • {item.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Mobile Products List */}
-              <div className="space-y-2 border-t border-border-custom/40 pt-4">
-                <span className="block text-[10px] uppercase tracking-wider text-accent font-extrabold">Products</span>
-                <div className="grid grid-cols-1 gap-3 pl-2">
-                  {productsGrouped.map((grp) => (
-                    <div key={grp.title} className="space-y-1">
-                      <span className="block text-[9px] text-text-muted font-bold uppercase">{grp.title}</span>
-                      <div className="flex flex-col gap-1 pl-2">
-                        {grp.items.map((i) => (
+                      {apisGrouped.map((grp) => (
+                        <div key={grp.title} className="space-y-1 border-l border-border-custom/60 pl-2">
                           <button
-                            key={i.slug}
-                            onClick={() => navToProduct(grp.category, i.slug)}
-                            className="block text-left text-2xs text-text-dark hover:text-primary py-0.5"
+                            onClick={() => toggleMobileSubgroup(grp.title)}
+                            className="flex items-center justify-between w-full text-2xs text-accent font-extrabold pb-0.5"
                           >
-                            • {i.name}
+                            <span>{grp.title}</span>
+                            <ChevronDown className={`w-3 h-3 transition-transform ${mobileSubgroupExpanded === grp.title ? 'rotate-180' : ''}`} />
                           </button>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                          
+                          {mobileSubgroupExpanded === grp.title && (
+                            <div className="flex flex-col gap-1.5 pl-1.5 scale-95 origin-top transition-all">
+                              {grp.items.map((i) => (
+                                <button
+                                  key={i.slug}
+                                  onClick={() => navToAPIDetail(i.slug)}
+                                  className="block text-left text-2xs text-text-dark hover:text-primary py-0.5 font-medium"
+                                >
+                                  • {i.name}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                      <button
+                        onClick={() => { setIsMobileMenuOpen(false); navigate('apis'); }}
+                        className="text-left text-xs text-primary font-bold mt-1.5 block hover:translate-x-1 transition-transform"
+                      >
+                        View All Active APIs →
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
+              {/* Collapsible Mobile Intermediates Accordion */}
+              <div className="space-y-1.5 border-b border-border-custom/50 pb-3" id="mobile-intermediates-accordion">
+                <button
+                  onClick={() => toggleMobileExpandedSection('intermediates')}
+                  className="flex items-center justify-between w-full text-base font-bold text-text-dark hover:text-primary"
+                >
+                  <span className={currentPath === 'intermediates' ? 'text-primary' : ''}>Active Intermediates</span>
+                  <ChevronDown className={`w-4 h-4 text-text-muted transition-transform duration-200 ${mobileExpandedSection === 'intermediates' ? 'rotate-180 text-primary' : ''}`} />
+                </button>
+                
+                <AnimatePresence>
+                  {mobileExpandedSection === 'intermediates' && (
+                    <motion.div 
+                      key="mobile-intermediates-content"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="pl-3 flex flex-col gap-2 pt-2 border-l border-border-custom/60 overflow-hidden"
+                    >
+                      {intermediatesList.map((item) => (
+                        <button
+                          key={item.slug}
+                          onClick={() => navToAPIDetail(item.slug)}
+                          className="block text-left text-2xs text-text-dark hover:text-primary py-1 font-semibold"
+                        >
+                          • {item.name}
+                        </button>
+                      ))}
+                      <button
+                        onClick={() => { setIsMobileMenuOpen(false); navigate('apis'); }}
+                        className="text-left text-xs text-primary font-bold mt-1 block"
+                      >
+                        Browse Global Intermediates →
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Collapsible Mobile Products Accordion */}
+              <div className="space-y-1.5 border-b border-border-custom/50 pb-3" id="mobile-products-accordion">
+                <button
+                  onClick={() => toggleMobileExpandedSection('products')}
+                  className="flex items-center justify-between w-full text-base font-bold text-text-dark hover:text-primary"
+                >
+                  <span className={currentPath === 'product-detail' || currentPath === 'products' ? 'text-primary' : ''}>Products Portfolio</span>
+                  <ChevronDown className={`w-4 h-4 text-text-muted transition-transform duration-200 ${mobileExpandedSection === 'products' ? 'rotate-180 text-primary' : ''}`} />
+                </button>
+                
+                <AnimatePresence>
+                  {mobileExpandedSection === 'products' && (
+                    <motion.div 
+                      key="mobile-products-content"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="pl-3 space-y-3 pt-2 overflow-hidden"
+                    >
+                      {productsGrouped.map((grp) => (
+                        <div key={grp.title} className="space-y-1 border-l border-border-custom/60 pl-2">
+                          <button
+                            onClick={() => toggleMobileSubgroup(`prod-${grp.title}`)}
+                            className="flex items-center justify-between w-full text-2xs text-accent font-extrabold pb-0.5"
+                          >
+                            <span>{grp.title}</span>
+                            <ChevronDown className={`w-3 h-3 transition-transform ${mobileSubgroupExpanded === `prod-${grp.title}` ? 'rotate-180' : ''}`} />
+                          </button>
+                          
+                          {mobileSubgroupExpanded === `prod-${grp.title}` && (
+                            <div className="flex flex-col gap-1.5 pl-1.5 scale-95 origin-top transition-all">
+                              {grp.items.map((i) => (
+                                <button
+                                  key={i.slug}
+                                  onClick={() => navToProduct(grp.category, i.slug)}
+                                  className="block text-left text-2xs text-text-dark hover:text-primary py-0.5 font-medium"
+                                >
+                                  • {i.name}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Company Overview Link */}
               <button 
                 onClick={() => { setIsMobileMenuOpen(false); navigate('about'); }}
-                className="block text-left w-full text-base font-bold text-text-dark hover:text-primary border-t border-border-custom/40 pt-4"
+                className={`block text-left w-full text-base font-bold pb-2 border-b border-border-custom/50 ${currentPath === 'about' ? 'text-primary' : 'text-text-dark'}`}
               >
                 Company Overview
               </button>
 
+              {/* Contact Link */}
               <button 
                 onClick={() => { setIsMobileMenuOpen(false); navigate('contact'); }}
-                className="block text-left w-full text-base font-bold text-text-dark hover:text-primary"
+                className={`block text-left w-full text-base font-bold pb-2 border-b border-border-custom/50 ${currentPath === 'contact' ? 'text-primary' : 'text-text-dark'}`}
               >
                 Contact
               </button>

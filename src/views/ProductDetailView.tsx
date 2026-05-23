@@ -82,6 +82,21 @@ export default function ProductDetailView({ category, slug, navigate }: ProductD
               <p className="text-xs text-text-muted leading-relaxed">{product.overview.subtext}</p>
             </div>
 
+            {/* Image 1: Laboratory petri dish/tissue culture research representation */}
+            <div className="relative rounded-2xl overflow-hidden h-44 sm:h-52 shadow-md border border-border-custom" id="prod-detail-img-1">
+              <img 
+                src="https://images.unsplash.com/photo-1581093588401-f3c22d7a1f18?q=80&w=800&auto=format&fit=crop" 
+                alt={`${product.subcategory} laboratory operations`}
+                className="w-full h-full object-cover select-none"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-section/90 to-transparent p-5 flex flex-col justify-end">
+                <span className="text-[9px] uppercase tracking-wider text-accent font-extrabold pb-0.5">Ken Hill Sourcing Assurance</span>
+                <h4 className="text-xs font-bold text-white uppercase tracking-tight">Sterile Environment Guarantee</h4>
+                <p className="text-[10px] text-white/80 font-body">Cultivated and sourced through strictly monitored cleanrooms adhering to global standards.</p>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
               {product.serviceCards.map((card, index) => (
                 <div key={card.title} className="bg-surface border border-border-custom rounded-2xl p-5 hover:shadow-md transition-shadow">
@@ -132,6 +147,20 @@ export default function ProductDetailView({ category, slug, navigate }: ProductD
 
           {/* Right Sourcing & Quality Side column */}
           <div className="lg:col-span-4 space-y-6">
+            {/* Image 2: Industrial microscope/biological workspace layout */}
+            <div className="relative rounded-2xl overflow-hidden h-40 border border-border-custom shadow-sm bg-surface" id="prod-detail-img-2">
+              <img 
+                src="https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=400&auto=format&fit=crop" 
+                alt={`${product.name} industrial microscope checking`}
+                className="w-full h-full object-cover select-none"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-section/80 via-transparent to-transparent p-4 flex flex-col justify-end">
+                <span className="text-[9px] uppercase tracking-wider text-accent font-extrabold pb-0.5">Automated Bio-Assay Control</span>
+                <p className="text-xs font-bold text-white uppercase font-sans">Assay Precision Checked</p>
+              </div>
+            </div>
+
             <div className="bg-primary text-white rounded-2xl p-6 space-y-6 shadow-lg">
               <h3 className="text-md font-bold uppercase tracking-wider text-accent border-b border-white/10 pb-2">Why Sourced From Us?</h3>
               

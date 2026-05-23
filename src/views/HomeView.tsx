@@ -12,9 +12,10 @@ interface HomeViewProps {
 
 export default function HomeView({ navigate }: HomeViewProps) {
   const stats = [
-    { value: "400+", label: "Pharma Products Traded" },
-    { value: "18+", label: "Years of Sourcing Expertise" },
-    { value: "45+", label: "Countries Served Globally" }
+    { value: "400+", label: "Active Pharma Compounds", desc: "Vetted API monographs and certified intermediates." },
+    { value: "18+", label: "Years Trading Presence", desc: "Decades of global sourcing, export & logistics expertise." },
+    { value: "45+", label: "Trade Corridors Served", desc: "Direct distribution routes across regulated markets." },
+    { value: "100%", label: "Traceability Assurance", desc: "Complete stability data, MSDS & DMF dossier compliance." }
   ];
 
   const therapeuticSegments = [
@@ -188,6 +189,39 @@ export default function HomeView({ navigate }: HomeViewProps) {
               </div>
             </div>
 
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 2.5 — KPI PERFORMANCE DASHBOARD */}
+      <section className="py-16 bg-bg border-y border-border-custom" id="home-kpi-dashboard">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-[10px] uppercase tracking-widest text-[#1A3A6B] font-extrabold">GLOBAL AUTHORITY METRICS</span>
+            <h2 className="text-2xl sm:text-3xl font-black text-text-dark mt-1">Sourcing Performance In Numbers</h2>
+            <p className="text-xs text-text-muted mt-2">Quantitative benchmarks illustrating our compliance rigor and distribution continuity.</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {stats.map((stat, idx) => (
+              <div 
+                key={idx} 
+                className="bg-surface border border-border-custom hover:border-primary/20 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+                id={`home-kpi-card-${idx}`}
+              >
+                <div className="space-y-2">
+                  <div className="text-3xl sm:text-4xl font-black text-[#1A3A6B] tracking-tight">
+                    {stat.value}
+                  </div>
+                  <h4 className="text-xs font-bold text-text-dark uppercase tracking-wide">
+                    {stat.label}
+                  </h4>
+                  <p className="text-[11px] text-text-muted font-body leading-normal">
+                    {stat.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

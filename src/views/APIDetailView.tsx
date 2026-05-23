@@ -66,6 +66,41 @@ export default function APIDetailView({ slug, navigate }: APIDetailViewProps) {
   // Resolve matching product monomer
   const activeItem = api || intermediate;
 
+  // Determine parent category and compile related items
+  const isCardiovascular = cardiovascularAPIs.some(item => item.slug.toLowerCase() === slug.toLowerCase());
+  const isCNS = cnsNeurologicalAPIs.some(item => item.slug.toLowerCase() === slug.toLowerCase());
+  const isGastro = gastrointestinalAPIs.some(item => item.slug.toLowerCase() === slug.toLowerCase());
+  const isRespiratory = respiratoryAPIs.some(item => item.slug.toLowerCase() === slug.toLowerCase());
+  const isEndocrine = endocrineMetabolicAPIs.some(item => item.slug.toLowerCase() === slug.toLowerCase());
+
+  let categoryName = "Other Sourced Active APIs";
+  let relatedList: any[] = [];
+
+  if (isCardiovascular) {
+    categoryName = "Cardiovascular & Bone Health APIs";
+    relatedList = cardiovascularAPIs;
+  } else if (isCNS) {
+    categoryName = "CNS & Neurological APIs";
+    relatedList = cnsNeurologicalAPIs;
+  } else if (isGastro) {
+    categoryName = "Gastrointestinal APIs";
+    relatedList = gastrointestinalAPIs;
+  } else if (isRespiratory) {
+    categoryName = "Respiratory APIs";
+    relatedList = respiratoryAPIs;
+  } else if (isEndocrine) {
+    categoryName = "Endocrine & Metabolic APIs";
+    relatedList = endocrineMetabolicAPIs;
+  } else {
+    categoryName = "Regulatory Intermediates";
+    relatedList = intermediatesData;
+  }
+
+  // Filter out the active item itself and take up to 3 for clean visual rhythm
+  const filteredRelated = relatedList
+    .filter(item => item.slug.toLowerCase() !== slug.toLowerCase())
+    .slice(0, 3);
+
   const [activeTab, setActiveTab] = useState<'monograph' | 'specifications' | 'regulatory'>('monograph');
   const [downloadSuccess, setDownloadSuccess] = useState(false);
 
@@ -155,6 +190,21 @@ export default function APIDetailView({ slug, navigate }: APIDetailViewProps) {
               <div>
                 <span className="block text-[8px] text-text-muted uppercase tracking-wider font-bold">Standard Grade</span>
                 <span className="block truncate font-mono">{activeItem.grade}</span>
+              </div>
+            </div>
+
+            {/* Image 1: Monograph Chemistry/Clinical Lab representation */}
+            <div className="relative rounded-2xl overflow-hidden h-44 sm:h-56 shadow-md border border-border-custom" id="detail-image-1">
+              <img 
+                src="https://images.unsplash.com/photo-1579154204601-01588f351167?q=80&w=800&auto=format&fit=crop" 
+                alt={`${activeItem.name} chemical assay checks`}
+                className="w-full h-full object-cover select-none"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-section/90 to-transparent p-6 flex flex-col justify-end">
+                <span className="text-[9px] uppercase tracking-wider text-accent font-extrabold pb-0.5">Ken Hill Technical Logs</span>
+                <h4 className="text-md font-bold text-white uppercase tracking-tight">Active Molecular Verification</h4>
+                <p className="text-[10px] text-white/85 font-body">100% chromatographic assessment and molecular control validation profile.</p>
               </div>
             </div>
 
@@ -379,6 +429,78 @@ export default function APIDetailView({ slug, navigate }: APIDetailViewProps) {
             </div>
           </div>
         </div>
+
+        {/* RELATED APIS AND BROWSE ALL SECTION */}
+        <AnimatedSection className="pt-12 border-t border-border-custom space-y-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="space-y-1">
+              <span className="text-[10px] uppercase font-bold text-accent tracking-widest block">Therapeutic Affiliations</span>
+              <h3 className="text-xl font-bold text-text-dark">Other APIs in "{categoryName}"</h3>
+            </div>
+            <button
+              onClick={() => navigate('apis')} 
+              className="text-xs font-bold text-primary hover:text-primary-hover flex items-center space-x-1 outline-none self-start cursor-pointer"
+            >
+              <span>Explore All active monographs</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {filteredRelated.map((item) => (
+              <div 
+                key={item.slug} 
+                onClick={() => navigate('api-detail', { slug: item.slug })}
+                className="bg-surface border border-border-custom rounded-2xl p-5 hover:-translate-y-1 transition-all duration-300 hover:shadow-lg cursor-pointer flex flex-col justify-between"
+              >
+                <div className="space-y-3">
+                  <span className="inline-block text-[8px] uppercase tracking-wider text-accent font-extrabold px-2 py-0.5 bg-accent/5 rounded-md">
+                    {item.badge || 'API'}
+                  </span>
+                  <h4 className="text-sm font-extrabold text-text-dark line-clamp-1 hover:text-primary">{item.name}</h4>
+                  <p className="text-3xs text-text-muted font-body line-clamp-2">{item.intro || 'Quality active pharmaceutical ingredient'}</p>
+                </div>
+
+                <div className="pt-4 mt-4 border-t border-border-custom/40 flex justify-between items-center">
+                  <span className="text-[8px] font-mono text-text-muted">{item.casNumber}</span>
+                  <span className="text-3xs font-bold text-primary flex items-center space-x-0.5 font-sans">
+                    <span>View Monograph</span>
+                    <ChevronRight className="w-3 h-3" />
+                  </span>
+                </div>
+              </div>
+            ))}
+
+            {/* "Browse All" Card */}
+            <div 
+              onClick={() => navigate('apis')}
+              className="bg-[#1A3A6B] text-white rounded-2xl p-5 hover:-translate-y-1 transition-all duration-300 hover:shadow-xl cursor-pointer flex flex-col justify-between shadow-lg shadow-[#1A3A6B]/15 relative overflow-hidden group min-h-[170px]"
+              id="browse-all-apis-card"
+            >
+              {/* Image 2: High-fidelity logistics & cargo transportation representation */}
+              <div className="absolute inset-0 opacity-20 group-hover:scale-105 transition-transform duration-500 pointer-events-none">
+                <img 
+                  src="https://images.unsplash.com/photo-1532187863486-abf9d39d66e8?q=80&w=500&auto=format&fit=crop"
+                  alt="Industrial pharmaceutical transport operations"
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1A3A6B] to-transparent pointer-events-none"></div>
+
+              <div className="space-y-2 relative z-10">
+                <span className="text-[8px] uppercase tracking-wider text-accent font-black">Trade registries</span>
+                <h4 className="text-md font-bold text-white leading-tight">Browse Full Sourced APIs Registry →</h4>
+                <p className="text-3xs text-white/80 font-body">Access certified Active Ingredients, custom monograph assays or Stability documentation securely in one place.</p>
+              </div>
+
+              <div className="relative z-10 pt-4 mt-4 border-t border-white/15 flex justify-between items-center text-accent font-bold text-3xs">
+                <span>View Complete List</span>
+                <ChevronRight className="w-4 h-4 text-accent" />
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
       </div>
     </div>
   );
