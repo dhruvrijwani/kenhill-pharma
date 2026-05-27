@@ -410,190 +410,13 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
                 Home
               </button>
 
-              {/* APIs Megamenu Dropdown */}
-              <div 
-                className="relative"
-                onMouseEnter={() => setActiveDropdown('apis')}
-                onMouseLeave={() => setActiveDropdown(null)}
+              <button 
+                onClick={() => navigate('about')} 
+                className={getLinkClass(currentPath === 'about')}
+                id="nav-item-about"
               >
-                <button 
-                  onClick={() => navigate('apis')}
-                  className={`${getLinkClass(
-                    currentPath === 'apis' || currentPath === 'api-detail'
-                  )} flex items-center space-x-1 outline-none`}
-                  id="nav-dropdown-apis"
-                >
-                  <span>APIs</span>
-                  <ChevronDown className="w-4 h-4 transition-transform duration-200" />
-                </button>
-
-                <AnimatePresence>
-                  {activeDropdown === 'apis' && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute left-1/2 -translate-x-1/2 mt-2 w-[550px] rounded-2xl bg-surface border border-border-custom shadow-2xl p-6 z-50 grid grid-cols-2 gap-6"
-                      id="megamenu-apis"
-                    >
-                      {/* Column 1: Human APIs */}
-                      <div className="space-y-3">
-                        <span className="block text-[10px] uppercase tracking-wider text-accent font-bold pb-1.5 border-b border-border-custom/40">
-                          Human APIs
-                        </span>
-                        <div className="flex flex-col gap-1.5">
-                          {newApisGrouped.human.map((item) => (
-                            <button
-                              key={item.slug}
-                              onClick={() => navToAPIDetail(item.slug)}
-                              className="w-full text-left font-body text-2xs text-text-dark hover:text-primary transition-all pr-2 hover:translate-x-1 animate-fadeIn"
-                            >
-                              {item.name}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Column 2: Veterinary APIs */}
-                      <div className="space-y-3">
-                        <span className="block text-[10px] uppercase tracking-wider text-accent font-bold pb-1.5 border-b border-border-custom/40">
-                          Veterinary APIs
-                        </span>
-                        <div className="flex flex-col gap-1.5">
-                          {newApisGrouped.veterinary.map((item) => (
-                            <button
-                              key={item.slug}
-                              onClick={() => navToAPIDetail(item.slug)}
-                              className="w-full text-left font-body text-2xs text-text-dark hover:text-primary transition-all pr-2 hover:translate-x-1 animate-fadeIn"
-                            >
-                              {item.name}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Formulation Dropdown */}
-              <div 
-                className="relative"
-                onMouseEnter={() => setActiveDropdown('formulation')}
-                onMouseLeave={() => setActiveDropdown(null)}
-              >
-                <button 
-                  className={`${getLinkClass(
-                    activeDropdown === 'formulation'
-                  )} flex items-center space-x-1 outline-none`}
-                  id="nav-dropdown-formulation"
-                >
-                  <span>Formulation</span>
-                  <ChevronDown className="w-4 h-4 transition-transform duration-200" />
-                </button>
-
-                <AnimatePresence>
-                  {activeDropdown === 'formulation' && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute left-1/2 -translate-x-1/2 mt-2 w-[400px] rounded-2xl bg-surface border border-border-custom shadow-2xl p-6 z-50 grid grid-cols-2 gap-6"
-                      id="megamenu-formulation"
-                    >
-                      {/* Column 1: Human Medicine */}
-                      <div className="space-y-3">
-                        <span className="block text-[10px] uppercase tracking-wider text-accent font-bold pb-1.5 border-b border-border-custom/40">
-                          Human Medicine
-                        </span>
-                        <div className="flex flex-col gap-1.5">
-                          {formulationData.human.map((item) => (
-                            <a
-                              key={item.name}
-                              href={item.href}
-                              onClick={(e) => {
-                                if (item.href === '#') {
-                                  e.preventDefault();
-                                }
-                                setActiveDropdown(null);
-                              }}
-                              className="w-full text-left font-body text-2xs text-text-dark hover:text-primary transition-all pr-2 hover:translate-x-1"
-                            >
-                              {item.name}
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Column 2: Veterinary Medicine */}
-                      <div className="space-y-3">
-                        <span className="block text-[10px] uppercase tracking-wider text-accent font-bold pb-1.5 border-b border-border-custom/40">
-                          Veterinary Medicine
-                        </span>
-                        <div className="flex flex-col gap-1.5">
-                          <a
-                            href={formulationData.veterinary.href}
-                            onClick={(e) => {
-                              if (formulationData.veterinary.href === '#') {
-                                e.preventDefault();
-                              }
-                              setActiveDropdown(null);
-                            }}
-                            className="w-full text-left font-body text-2xs text-text-dark hover:text-primary transition-all pr-2 hover:translate-x-1"
-                          >
-                            {formulationData.veterinary.name}
-                          </a>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Intermediates Dropdown */}
-              <div 
-                className="relative"
-                onMouseEnter={() => setActiveDropdown('intermediates')}
-                onMouseLeave={() => setActiveDropdown(null)}
-              >
-                <button 
-                  className={`${getLinkClass(
-                    currentPath === 'intermediates' || (currentPath === 'api-detail' && intermediatesList.some(i => i.slug === window.location.hash.split('slug=')[1]))
-                  )} flex items-center space-x-1 outline-none`}
-                  id="nav-dropdown-intermediates"
-                >
-                  <span>Intermediates</span>
-                  <ChevronDown className="w-4 h-4 transition-transform duration-200" />
-                </button>
-
-                <AnimatePresence>
-                  {activeDropdown === 'intermediates' && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute left-0 mt-2 w-72 rounded-2xl bg-surface border border-border-custom shadow-2xl p-4 z-50 flex flex-col gap-2"
-                      id="dropdown-intermediates"
-                    >
-                      <div className="pb-1.5 border-b border-border-custom/40">
-                        <span className="text-[10px] uppercase tracking-wider text-accent font-bold">Regulatory Intermediates</span>
-                      </div>
-                      {intermediatesList.map((item) => (
-                        <button
-                          key={item.slug}
-                          onClick={() => navToAPIDetail(item.slug)}
-                          className="w-full text-left font-body text-2xs text-text-dark hover:text-primary hover:bg-bg p-2 rounded-lg transition-colors leading-snug"
-                        >
-                          {item.name}
-                        </button>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+                Company Overview
+              </button>
 
               {/* Products Megamenu Dropdown */}
               <div 
@@ -618,109 +441,189 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute left-1/2 -translate-x-1/2 mt-2 w-[800px] rounded-2xl bg-surface border border-border-custom shadow-2xl p-6 z-50 grid grid-cols-4 gap-6"
+                      className="absolute left-1/2 -translate-x-1/2 mt-2 w-[980px] rounded-2xl bg-surface border border-border-custom shadow-2xl p-8 z-50 grid grid-cols-4 gap-8"
                       id="megamenu-products"
                     >
-                      {productsGrouped.map((group) => (
-                        <div key={group.title} className="space-y-3">
-                          <span className="block text-[10px] uppercase tracking-wider text-accent font-bold pb-1.5 border-b border-border-custom/40">
-                            {group.title}
-                          </span>
-                          <div className="flex flex-col gap-1.5">
-                            {group.items.map((item) => (
+                      {/* Column 1: Formulation */}
+                      <div className="space-y-4">
+                        <span className="block text-[11px] uppercase tracking-wider text-accent font-extrabold pb-2 border-b border-border-custom/40">
+                          Formulation
+                        </span>
+                        
+                        <div className="space-y-3">
+                          {/* Human Medicine */}
+                          <div className="space-y-1">
+                            <span className="block text-[10px] uppercase tracking-wider text-text-muted font-bold">
+                              Human Medicine
+                            </span>
+                            <div className="flex flex-col gap-1 pl-1">
                               <button
-                                key={item.slug}
-                                onClick={() => navToProduct(group.category, item.slug)}
-                                className="w-full text-left font-body text-2xs text-text-dark hover:text-primary transition-all pr-2 hover:translate-x-1"
+                                onClick={() => { setActiveDropdown(null); navigate('contact', { product: 'Formulation: Human Medicine - General' }); }}
+                                className="text-left font-body text-2xs text-text-dark hover:text-primary transition-all pr-2 hover:translate-x-1"
                               >
-                                {item.name}
+                                General
                               </button>
-                            ))}
+                              <button
+                                onClick={() => { setActiveDropdown(null); navigate('contact', { product: 'Formulation: Human Medicine - Oncology' }); }}
+                                className="text-left font-body text-2xs text-text-dark hover:text-primary transition-all pr-2 hover:translate-x-1"
+                              >
+                                Oncology
+                              </button>
+                              <button
+                                onClick={() => { setActiveDropdown(null); navigate('contact', { product: 'Formulation: Human Medicine - Critical Care' }); }}
+                                className="text-left font-body text-2xs text-text-dark hover:text-primary transition-all pr-2 hover:translate-x-1"
+                              >
+                                Critical Care
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Veterinary Medicine */}
+                          <div className="space-y-1 pt-2 border-t border-border-custom/20">
+                            <button
+                              onClick={() => { setActiveDropdown(null); navigate('contact', { product: 'Formulation: Veterinary Medicine' }); }}
+                              className="w-full text-left font-body text-2xs text-text-dark hover:text-primary font-bold uppercase tracking-wider transition-all pr-2 hover:translate-x-1"
+                            >
+                              Veterinary Medicine
+                            </button>
                           </div>
                         </div>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Chemicals Dropdown */}
-              <div 
-                className="relative"
-                onMouseEnter={() => setActiveDropdown('chemicals')}
-                onMouseLeave={() => setActiveDropdown(null)}
-              >
-                <button 
-                  className={`${getLinkClass(
-                    activeDropdown === 'chemicals'
-                  )} flex items-center space-x-1 outline-none`}
-                  id="nav-dropdown-chemicals"
-                >
-                  <span>Chemicals</span>
-                  <ChevronDown className="w-4 h-4 transition-transform duration-200" />
-                </button>
-
-                <AnimatePresence>
-                  {activeDropdown === 'chemicals' && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute left-0 mt-2 w-56 rounded-2xl bg-surface border border-border-custom shadow-2xl p-4 z-50 flex flex-col gap-2"
-                      id="dropdown-chemicals"
-                    >
-                      <div className="pb-1.5 border-b border-border-custom/40">
-                        <span className="text-[10px] uppercase tracking-wider text-accent font-bold">Chemical Sourcing</span>
                       </div>
-                      {chemicalsData.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          onClick={(e) => {
-                            if (item.href === '#') {
-                              e.preventDefault();
-                            }
-                            setActiveDropdown(null);
-                          }}
-                          className="w-full text-left font-body text-2xs text-text-dark hover:text-primary hover:bg-bg p-2 rounded-lg transition-colors leading-snug"
-                        >
-                          {item.name}
-                        </a>
-                      ))}
+
+                      {/* Column 2: APIs */}
+                      <div className="space-y-4">
+                        <span className="block text-[11px] uppercase tracking-wider text-accent font-extrabold pb-2 border-b border-border-custom/40">
+                          APIs
+                        </span>
+                        
+                        <div className="space-y-3">
+                          {/* Human APIs */}
+                          <div className="space-y-1">
+                            <span 
+                              className="block text-[10px] uppercase tracking-wider text-text-muted font-bold cursor-pointer hover:text-primary" 
+                              onClick={() => { setActiveDropdown(null); navigate('apis'); }}
+                            >
+                              Human APIs
+                            </span>
+                            <div className="flex flex-col gap-1.5 pl-1 max-h-[160px] overflow-y-auto pr-1 scrollbar-thin">
+                              {newApisGrouped.human.map((item) => (
+                                <button
+                                  key={item.slug}
+                                  onClick={() => navToAPIDetail(item.slug)}
+                                  className="w-full text-left font-body text-2xs text-text-dark hover:text-primary transition-all hover:translate-x-1"
+                                >
+                                  {item.name}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Veterinary APIs */}
+                          <div className="space-y-1 pt-2 border-t border-border-custom/20">
+                            <span 
+                              className="block text-[10px] uppercase tracking-wider text-text-muted font-bold cursor-pointer hover:text-primary" 
+                              onClick={() => { setActiveDropdown(null); navigate('apis'); }}
+                            >
+                              Veterinary APIs
+                            </span>
+                            <div className="flex flex-col gap-1.5 pl-1 max-h-[160px] overflow-y-auto pr-1 scrollbar-thin">
+                              {newApisGrouped.veterinary.map((item) => (
+                                <button
+                                  key={item.slug}
+                                  onClick={() => navToAPIDetail(item.slug)}
+                                  className="w-full text-left font-body text-2xs text-text-dark hover:text-primary transition-all hover:translate-x-1"
+                                >
+                                  {item.name}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Column 3: Intermediates */}
+                      <div className="space-y-4">
+                        <span className="block text-[11px] uppercase tracking-wider text-accent font-extrabold pb-2 border-b border-border-custom/40">
+                          Intermediates
+                        </span>
+                        <div className="flex flex-col gap-1.5">
+                          {intermediatesList.map((item) => (
+                            <button
+                              key={item.slug}
+                              onClick={() => navToAPIDetail(item.slug)}
+                              className="w-full text-left font-body text-2xs text-text-dark hover:text-primary hover:bg-bg p-1.5 rounded-lg transition-all leading-snug hover:translate-x-1"
+                            >
+                              {item.name}
+                            </button>
+                          ))}
+                          <button
+                            onClick={() => { setActiveDropdown(null); navigate('apis'); }}
+                            className="text-left text-2xs text-primary font-bold mt-2 hover:underline"
+                          >
+                            Browse All Intermediates →
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Column 4: Chemicals, Salts & Solvents */}
+                      <div className="space-y-6">
+                        {/* Chemicals */}
+                        <div className="space-y-3">
+                          <span className="block text-[11px] uppercase tracking-wider text-accent font-extrabold pb-2 border-b border-border-custom/40">
+                            Chemicals
+                          </span>
+                          <div className="flex flex-col gap-1 pl-1">
+                            <button
+                              onClick={() => { setActiveDropdown(null); navigate('contact', { product: 'Chemicals - API' }); }}
+                              className="text-left font-body text-2xs text-text-dark hover:text-primary transition-all pr-2 hover:translate-x-1"
+                            >
+                              API Chemicals
+                            </button>
+                            <button
+                              onClick={() => { setActiveDropdown(null); navigate('contact', { product: 'Chemicals - DIES Chemical' }); }}
+                              className="text-left font-body text-2xs text-text-dark hover:text-primary transition-all pr-2 hover:translate-x-1"
+                            >
+                              DIES Chemical
+                            </button>
+                            <button
+                              onClick={() => { setActiveDropdown(null); navigate('contact', { product: 'Chemicals - Agro Chemical' }); }}
+                              className="text-left font-body text-2xs text-text-dark hover:text-primary transition-all pr-2 hover:translate-x-1"
+                            >
+                              Agro Chemical
+                            </button>
+                            <button
+                              onClick={() => { setActiveDropdown(null); navigate('contact', { product: 'Chemicals - Pigments' }); }}
+                              className="text-left font-body text-2xs text-text-dark hover:text-primary transition-all pr-2 hover:translate-x-1"
+                            >
+                              Pigments
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Industrial Salts & Solvents */}
+                        <div className="grid grid-cols-2 gap-4 pt-3 border-t border-border-custom/30">
+                          <div className="space-y-2">
+                            <button
+                              onClick={() => { setActiveDropdown(null); navigate('contact', { product: 'Industrial Salts' }); }}
+                              className="w-full text-left font-body text-2xs text-accent font-extrabold uppercase tracking-wider hover:text-primary transition-colors"
+                            >
+                              Industrial Salts
+                            </button>
+                          </div>
+                          <div className="space-y-2">
+                            <button
+                              onClick={() => { setActiveDropdown(null); navigate('contact', { product: 'Solvents' }); }}
+                              className="w-full text-left font-body text-2xs text-accent font-extrabold uppercase tracking-wider hover:text-primary transition-colors"
+                            >
+                              Solvents
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
-
-              {/* Industrial Salts */}
-              <a 
-                href="#"
-                onClick={(e) => e.preventDefault()}
-                className={getLinkClass(false)}
-                id="nav-item-industrial-salts"
-              >
-                Industrial Salts
-              </a>
-
-              {/* Solvents */}
-              <a 
-                href="#"
-                onClick={(e) => e.preventDefault()}
-                className={getLinkClass(false)}
-                id="nav-item-solvents"
-              >
-                Solvents
-              </a>
-
-              {/* Company Overview */}
-              <button 
-                onClick={() => navigate('about')} 
-                className={getLinkClass(currentPath === 'about')}
-                id="nav-item-about"
-              >
-                Company Overview
-              </button>
 
               <button 
                 onClick={() => navigate('contact')} 
@@ -941,177 +844,13 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
                 Home
               </button>
 
-              {/* APIs Accordion */}
-              <div className="space-y-1.5 border-b border-border-custom/50 pb-3" id="mobile-apis-accordion">
-                <button
-                  onClick={() => toggleMobileExpandedSection('apis')}
-                  className="flex items-center justify-between w-full text-base font-bold text-text-dark hover:text-primary"
-                >
-                  <span className={currentPath === 'apis' || currentPath === 'api-detail' ? 'text-primary' : ''}>Active APIs</span>
-                  <ChevronDown className={`w-4 h-4 text-text-muted transition-transform duration-200 ${mobileExpandedSection === 'apis' ? 'rotate-180 text-primary' : ''}`} />
-                </button>
-                
-                <AnimatePresence>
-                  {mobileExpandedSection === 'apis' && (
-                    <motion.div 
-                      key="mobile-apis-content"
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="pl-3 space-y-3 pt-2 overflow-hidden"
-                    >
-                      {/* Human APIs subgroup */}
-                      <div className="space-y-1 border-l border-border-custom/60 pl-2">
-                        <button
-                          onClick={() => toggleMobileSubgroup('human-apis')}
-                          className="flex items-center justify-between w-full text-2xs text-accent font-extrabold pb-0.5"
-                        >
-                          <span>Human APIs</span>
-                          <ChevronDown className={`w-3 h-3 transition-transform ${mobileSubgroupExpanded === 'human-apis' ? 'rotate-180' : ''}`} />
-                        </button>
-                        
-                        {mobileSubgroupExpanded === 'human-apis' && (
-                          <div className="flex flex-col gap-1.5 pl-1.5 scale-95 origin-top transition-all">
-                            {newApisGrouped.human.map((i) => (
-                              <button
-                                key={i.slug}
-                                onClick={() => { setIsMobileMenuOpen(false); navToAPIDetail(i.slug); }}
-                                className="block text-left text-2xs text-text-dark hover:text-primary py-0.5 font-medium"
-                              >
-                                • {i.name}
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Veterinary APIs subgroup */}
-                      <div className="space-y-1 border-l border-border-custom/60 pl-2">
-                        <button
-                          onClick={() => toggleMobileSubgroup('vet-apis')}
-                          className="flex items-center justify-between w-full text-2xs text-accent font-extrabold pb-0.5"
-                        >
-                          <span>Veterinary APIs</span>
-                          <ChevronDown className={`w-3 h-3 transition-transform ${mobileSubgroupExpanded === 'vet-apis' ? 'rotate-180' : ''}`} />
-                        </button>
-                        
-                        {mobileSubgroupExpanded === 'vet-apis' && (
-                          <div className="flex flex-col gap-1.5 pl-1.5 scale-95 origin-top transition-all">
-                            {newApisGrouped.veterinary.map((i) => (
-                              <button
-                                key={i.slug}
-                                onClick={() => { setIsMobileMenuOpen(false); navToAPIDetail(i.slug); }}
-                                className="block text-left text-2xs text-text-dark hover:text-primary py-0.5 font-medium"
-                              >
-                                • {i.name}
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Formulation Accordion */}
-              <div className="space-y-1.5 border-b border-border-custom/50 pb-3" id="mobile-formulation-accordion">
-                <button
-                  onClick={() => toggleMobileExpandedSection('formulation')}
-                  className="flex items-center justify-between w-full text-base font-bold text-text-dark hover:text-primary"
-                >
-                  <span>Formulation</span>
-                  <ChevronDown className={`w-4 h-4 text-text-muted transition-transform duration-200 ${mobileExpandedSection === 'formulation' ? 'rotate-180 text-primary' : ''}`} />
-                </button>
-                
-                <AnimatePresence>
-                  {mobileExpandedSection === 'formulation' && (
-                    <motion.div 
-                      key="mobile-formulation-content"
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="pl-3 space-y-3 pt-2 overflow-hidden"
-                    >
-                      {/* Human Medicine subgroup */}
-                      <div className="space-y-1 border-l border-border-custom/60 pl-2">
-                        <button
-                          onClick={() => toggleMobileSubgroup('human-med')}
-                          className="flex items-center justify-between w-full text-2xs text-accent font-extrabold pb-0.5"
-                        >
-                          <span>Human Medicine</span>
-                          <ChevronDown className={`w-3 h-3 transition-transform ${mobileSubgroupExpanded === 'human-med' ? 'rotate-180' : ''}`} />
-                        </button>
-                        
-                        {mobileSubgroupExpanded === 'human-med' && (
-                          <div className="flex flex-col gap-1.5 pl-1.5 scale-95 origin-top transition-all">
-                            {formulationData.human.map((i) => (
-                              <a
-                                key={i.name}
-                                href={i.href}
-                                onClick={(e) => {
-                                  if (i.href === '#') e.preventDefault();
-                                  setIsMobileMenuOpen(false);
-                                }}
-                                className="block text-left text-2xs text-text-dark hover:text-primary py-0.5 font-medium"
-                              >
-                                • {i.name}
-                              </a>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Veterinary Medicine link */}
-                      <div className="space-y-1 border-l border-border-custom/60 pl-2">
-                        <a
-                          href={formulationData.veterinary.href}
-                          onClick={(e) => {
-                            if (formulationData.veterinary.href === '#') e.preventDefault();
-                            setIsMobileMenuOpen(false);
-                          }}
-                          className="block text-left text-2xs text-accent font-extrabold pb-0.5 hover:text-primary"
-                        >
-                          Veterinary Medicine
-                        </a>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Intermediates Accordion */}
-              <div className="space-y-1.5 border-b border-border-custom/50 pb-3" id="mobile-intermediates-accordion">
-                <button
-                  onClick={() => toggleMobileExpandedSection('intermediates')}
-                  className="flex items-center justify-between w-full text-base font-bold text-text-dark hover:text-primary"
-                >
-                  <span className={currentPath === 'intermediates' ? 'text-primary' : ''}>Active Intermediates</span>
-                  <ChevronDown className={`w-4 h-4 text-text-muted transition-transform duration-200 ${mobileExpandedSection === 'intermediates' ? 'rotate-180 text-primary' : ''}`} />
-                </button>
-                
-                <AnimatePresence>
-                  {mobileExpandedSection === 'intermediates' && (
-                    <motion.div 
-                      key="mobile-intermediates-content"
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="pl-3 flex flex-col gap-2 pt-2 border-l border-border-custom/60 overflow-hidden"
-                    >
-                      {intermediatesList.map((item) => (
-                        <button
-                          key={item.slug}
-                          onClick={() => { setIsMobileMenuOpen(false); navToAPIDetail(item.slug); }}
-                          className="block text-left text-2xs text-text-dark hover:text-primary py-1 font-semibold"
-                        >
-                          • {item.name}
-                        </button>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+              {/* Company Overview Link */}
+              <button 
+                onClick={() => { setIsMobileMenuOpen(false); navigate('about'); }}
+                className={`block text-left w-full text-base font-bold pb-2 border-b border-border-custom/50 ${currentPath === 'about' ? 'text-primary' : 'text-text-dark'}`}
+              >
+                Company Overview
+              </button>
 
               {/* Products Accordion */}
               <div className="space-y-1.5 border-b border-border-custom/50 pb-3" id="mobile-products-accordion">
@@ -1130,100 +869,185 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
-                      className="pl-3 space-y-3 pt-2 overflow-hidden"
+                      className="pl-3 space-y-4 pt-2 overflow-hidden"
                     >
-                      {productsGrouped.map((grp) => (
-                        <div key={grp.title} className="space-y-1 border-l border-border-custom/60 pl-2">
-                          <button
-                            onClick={() => toggleMobileSubgroup(`prod-${grp.title}`)}
-                            className="flex items-center justify-between w-full text-2xs text-accent font-extrabold pb-0.5"
-                          >
-                            <span>{grp.title}</span>
-                            <ChevronDown className={`w-3 h-3 transition-transform ${mobileSubgroupExpanded === `prod-${grp.title}` ? 'rotate-180' : ''}`} />
-                          </button>
-                          
-                          {mobileSubgroupExpanded === `prod-${grp.title}` && (
-                            <div className="flex flex-col gap-1.5 pl-1.5 scale-95 origin-top transition-all">
-                              {grp.items.map((i) => (
-                                <button
-                                  key={i.slug}
-                                  onClick={() => { setIsMobileMenuOpen(false); navToProduct(grp.category, i.slug); }}
-                                  className="block text-left text-2xs text-text-dark hover:text-primary py-0.5 font-medium"
-                                >
-                                  • {i.name}
-                                </button>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Chemicals Accordion */}
-              <div className="space-y-1.5 border-b border-border-custom/50 pb-3" id="mobile-chemicals-accordion">
-                <button
-                  onClick={() => toggleMobileExpandedSection('chemicals')}
-                  className="flex items-center justify-between w-full text-base font-bold text-text-dark hover:text-primary"
-                >
-                  <span>Chemicals</span>
-                  <ChevronDown className={`w-4 h-4 text-text-muted transition-transform duration-200 ${mobileExpandedSection === 'chemicals' ? 'rotate-180 text-primary' : ''}`} />
-                </button>
-                
-                <AnimatePresence>
-                  {mobileExpandedSection === 'chemicals' && (
-                    <motion.div 
-                      key="mobile-chemicals-content"
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="pl-3 flex flex-col gap-2 pt-2 border-l border-border-custom/60 overflow-hidden"
-                    >
-                      {chemicalsData.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          onClick={(e) => {
-                            if (item.href === '#') e.preventDefault();
-                            setIsMobileMenuOpen(false);
-                          }}
-                          className="block text-left text-2xs text-text-dark hover:text-primary py-1 font-semibold"
+                      {/* Formulation Subgroup */}
+                      <div className="space-y-1 border-l border-border-custom/60 pl-2">
+                        <button
+                          onClick={() => toggleMobileSubgroup('formulation')}
+                          className="flex items-center justify-between w-full text-2xs text-accent font-extrabold pb-0.5"
                         >
-                          • {item.name}
-                        </a>
-                      ))}
+                          <span>Formulation</span>
+                          <ChevronDown className={`w-3 h-3 transition-transform ${mobileSubgroupExpanded === 'formulation' ? 'rotate-180' : ''}`} />
+                        </button>
+                        
+                        {mobileSubgroupExpanded === 'formulation' && (
+                          <div className="flex flex-col gap-2 pl-1.5 pt-1 scale-95 origin-top transition-all">
+                            <span className="block text-[10px] text-text-muted font-bold uppercase tracking-wider">Human Medicine</span>
+                            <button
+                              onClick={() => { setIsMobileMenuOpen(false); navigate('contact', { product: 'Formulation: Human Medicine - General' }); }}
+                              className="block text-left text-2xs text-text-dark hover:text-primary py-0.5 pl-2"
+                            >
+                              • General
+                            </button>
+                            <button
+                              onClick={() => { setIsMobileMenuOpen(false); navigate('contact', { product: 'Formulation: Human Medicine - Oncology' }); }}
+                              className="block text-left text-2xs text-text-dark hover:text-primary py-0.5 pl-2"
+                            >
+                              • Oncology
+                            </button>
+                            <button
+                              onClick={() => { setIsMobileMenuOpen(false); navigate('contact', { product: 'Formulation: Human Medicine - Critical Care' }); }}
+                              className="block text-left text-2xs text-text-dark hover:text-primary py-0.5 pl-2"
+                            >
+                              • Critical Care
+                            </button>
+                            
+                            <button
+                              onClick={() => { setIsMobileMenuOpen(false); navigate('contact', { product: 'Formulation: Veterinary Medicine' }); }}
+                              className="block text-left text-2xs text-text-dark hover:text-primary font-bold uppercase tracking-wider py-1 pl-2 border-t border-border-custom/20 mt-1"
+                            >
+                              Veterinary Medicine
+                            </button>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* APIs Subgroup */}
+                      <div className="space-y-1 border-l border-border-custom/60 pl-2">
+                        <button
+                          onClick={() => toggleMobileSubgroup('apis')}
+                          className="flex items-center justify-between w-full text-2xs text-accent font-extrabold pb-0.5"
+                        >
+                          <span>APIs</span>
+                          <ChevronDown className={`w-3 h-3 transition-transform ${mobileSubgroupExpanded === 'apis' ? 'rotate-180' : ''}`} />
+                        </button>
+                        
+                        {mobileSubgroupExpanded === 'apis' && (
+                          <div className="flex flex-col gap-2 pl-1.5 pt-1 scale-95 origin-top transition-all">
+                            {/* Human APIs */}
+                            <div>
+                              <span className="block text-[10px] text-text-muted font-bold uppercase tracking-wider cursor-pointer hover:text-primary" onClick={() => { setIsMobileMenuOpen(false); navigate('apis'); }}>Human APIs</span>
+                              <div className="flex flex-col gap-1 pl-2 mt-1 max-h-[120px] overflow-y-auto pr-1">
+                                {newApisGrouped.human.map((i) => (
+                                  <button
+                                    key={i.slug}
+                                    onClick={() => { setIsMobileMenuOpen(false); navToAPIDetail(i.slug); }}
+                                    className="block text-left text-2xs text-text-dark hover:text-primary py-0.5 font-medium"
+                                  >
+                                    • {i.name}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                            
+                            {/* Veterinary APIs */}
+                            <div className="border-t border-border-custom/20 pt-2">
+                              <span className="block text-[10px] text-text-muted font-bold uppercase tracking-wider cursor-pointer hover:text-primary" onClick={() => { setIsMobileMenuOpen(false); navigate('apis'); }}>Veterinary APIs</span>
+                              <div className="flex flex-col gap-1 pl-2 mt-1 max-h-[120px] overflow-y-auto pr-1">
+                                {newApisGrouped.veterinary.map((i) => (
+                                  <button
+                                    key={i.slug}
+                                    onClick={() => { setIsMobileMenuOpen(false); navToAPIDetail(i.slug); }}
+                                    className="block text-left text-2xs text-text-dark hover:text-primary py-0.5 font-medium"
+                                  >
+                                    • {i.name}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Intermediates Subgroup */}
+                      <div className="space-y-1 border-l border-border-custom/60 pl-2">
+                        <button
+                          onClick={() => toggleMobileSubgroup('intermediates')}
+                          className="flex items-center justify-between w-full text-2xs text-accent font-extrabold pb-0.5"
+                        >
+                          <span>Intermediates</span>
+                          <ChevronDown className={`w-3 h-3 transition-transform ${mobileSubgroupExpanded === 'intermediates' ? 'rotate-180' : ''}`} />
+                        </button>
+                        
+                        {mobileSubgroupExpanded === 'intermediates' && (
+                          <div className="flex flex-col gap-1.5 pl-1.5 pt-1 scale-95 origin-top transition-all">
+                            {intermediatesList.map((item) => (
+                              <button
+                                key={item.slug}
+                                onClick={() => { setIsMobileMenuOpen(false); navToAPIDetail(item.slug); }}
+                                className="block text-left text-2xs text-text-dark hover:text-primary py-0.5 font-medium"
+                              >
+                                • {item.name}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Chemicals Subgroup */}
+                      <div className="space-y-1 border-l border-border-custom/60 pl-2">
+                        <button
+                          onClick={() => toggleMobileSubgroup('chemicals')}
+                          className="flex items-center justify-between w-full text-2xs text-accent font-extrabold pb-0.5"
+                        >
+                          <span>Chemicals</span>
+                          <ChevronDown className={`w-3 h-3 transition-transform ${mobileSubgroupExpanded === 'chemicals' ? 'rotate-180' : ''}`} />
+                        </button>
+                        
+                        {mobileSubgroupExpanded === 'chemicals' && (
+                          <div className="flex flex-col gap-1 pl-1.5 pt-1 scale-95 origin-top transition-all">
+                            <button
+                              onClick={() => { setIsMobileMenuOpen(false); navigate('contact', { product: 'Chemicals - API' }); }}
+                              className="block text-left text-2xs text-text-dark hover:text-primary py-0.5"
+                            >
+                              • API Chemical
+                            </button>
+                            <button
+                              onClick={() => { setIsMobileMenuOpen(false); navigate('contact', { product: 'Chemicals - DIES Chemical' }); }}
+                              className="block text-left text-2xs text-text-dark hover:text-primary py-0.5"
+                            >
+                              • DIES Chemical
+                            </button>
+                            <button
+                              onClick={() => { setIsMobileMenuOpen(false); navigate('contact', { product: 'Chemicals - Agro Chemical' }); }}
+                              className="block text-left text-2xs text-text-dark hover:text-primary py-0.5"
+                            >
+                              • Agro Chemical
+                            </button>
+                            <button
+                              onClick={() => { setIsMobileMenuOpen(false); navigate('contact', { product: 'Chemicals - Pigments' }); }}
+                              className="block text-left text-2xs text-text-dark hover:text-primary py-0.5"
+                            >
+                              • Pigments
+                            </button>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Industrial Salts */}
+                      <div className="space-y-1 border-l border-border-custom/60 pl-2">
+                        <button
+                          onClick={() => { setIsMobileMenuOpen(false); navigate('contact', { product: 'Industrial Salts' }); }}
+                          className="block text-left text-2xs text-accent font-extrabold pb-0.5 hover:text-primary"
+                        >
+                          Industrial Salts
+                        </button>
+                      </div>
+
+                      {/* Solvents */}
+                      <div className="space-y-1 border-l border-border-custom/60 pl-2">
+                        <button
+                          onClick={() => { setIsMobileMenuOpen(false); navigate('contact', { product: 'Solvents' }); }}
+                          className="block text-left text-2xs text-accent font-extrabold pb-0.5 hover:text-primary"
+                        >
+                          Solvents
+                        </button>
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
-
-              {/* Industrial Salts */}
-              <a 
-                href="#"
-                onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); }}
-                className="block text-left w-full text-base font-bold pb-2 border-b border-border-custom/50 text-text-dark hover:text-primary"
-              >
-                Industrial Salts
-              </a>
-
-              {/* Solvents */}
-              <a 
-                href="#"
-                onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); }}
-                className="block text-left w-full text-base font-bold pb-2 border-b border-border-custom/50 text-text-dark hover:text-primary"
-              >
-                Solvents
-              </a>
-
-              {/* Company Overview Link */}
-              <button 
-                onClick={() => { setIsMobileMenuOpen(false); navigate('about'); }}
-                className={`block text-left w-full text-base font-bold pb-2 border-b border-border-custom/50 ${currentPath === 'about' ? 'text-primary' : 'text-text-dark'}`}
-              >
-                Company Overview
-              </button>
 
               {/* Contact Link */}
               <button 
