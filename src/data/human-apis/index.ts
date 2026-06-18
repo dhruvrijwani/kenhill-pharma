@@ -5,17 +5,98 @@ export const humanAPICategories: HumanAPICategory[] = [
     slug: 'steroids',
     name: 'Steroids',
     description:
-      'Synthetic corticosteroids modulating immune response and inflammation pathways. Indicated for autoimmune, allergic, and endocrine insufficiency disorders.',
+      'Synthetic glucocorticoid APIs spanning topical, inhaled, injectable, and systemic formulation grades. Supplied in USP/EP/BP specification to pharmaceutical manufacturers across regulated and emerging export markets.',
     image:
       'https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=800&auto=format&fit=crop',
     products: [
-      { id: 'ste-001', slug: 'prednisolone', name: 'Prednisolone', casNumber: '50-24-8', shortDescription: 'Synthetic glucocorticoid for inflammatory and autoimmune conditions including rheumatoid arthritis and asthma.' },
-      { id: 'ste-002', slug: 'dexamethasone', name: 'Dexamethasone', casNumber: '50-02-2', shortDescription: 'Potent long-acting glucocorticoid for severe allergic reactions, cerebral oedema, and COVID-19 management.' },
-      { id: 'ste-003', slug: 'betamethasone', name: 'Betamethasone', casNumber: '378-44-9', shortDescription: 'Long-acting corticosteroid for dermatological conditions and fetal lung maturation in preterm labour.' },
-      { id: 'ste-004', slug: 'methylprednisolone', name: 'Methylprednisolone', casNumber: '83-43-2', shortDescription: 'Intermediate-acting glucocorticoid for acute spinal cord injury and inflammatory episodes.' },
-      { id: 'ste-005', slug: 'hydrocortisone', name: 'Hydrocortisone', casNumber: '50-23-7', shortDescription: 'Natural corticosteroid for adrenal insufficiency, anaphylaxis, and topical inflammation management.' },
-      { id: 'ste-006', slug: 'triamcinolone', name: 'Triamcinolone', casNumber: '124-94-7', shortDescription: 'Intermediate glucocorticoid for intra-articular injection in musculoskeletal inflammatory conditions.' },
-      { id: 'ste-007', slug: 'beclomethasone', name: 'Beclomethasone Dipropionate', casNumber: '5534-09-8', shortDescription: 'Inhaled corticosteroid for prophylaxis and maintenance therapy of asthma and allergic rhinitis.' },
+      {
+        id: 'ste-001',
+        slug: 'beclomethasone-dipropionate',
+        name: 'Beclomethasone Dipropionate',
+        casNumber: '5534-09-8',
+        shortDescription:
+          'USP/EP/BP grade glucocorticoid supplied in micronized form for MDI, DPI, and nasal spray manufacturing. Sourced for asthma prophylaxis, allergic rhinitis, and topical dermatological formulation lines.',
+      },
+      {
+        id: 'ste-002',
+        slug: 'betamethasone-base-and-salts',
+        name: 'Betamethasone Base & Salts',
+        casNumber: '378-44-9 (base)',
+        shortDescription:
+          'Long-acting glucocorticoid available as free base, dipropionate (5593-20-4), valerate (2152-44-5), and sodium phosphate (151-73-5) — USP/EP/BP grade. Supplied for topical, injectable, and antenatal corticosteroid formulation manufacturing.',
+      },
+      {
+        id: 'ste-003',
+        slug: 'clobetasone-propionate',
+        name: 'Clobetasone Propionate',
+        casNumber: 'Verify with supplier',
+        shortDescription:
+          'Corticosteroid API for topical anti-inflammatory formulations. Supplied to specification for cream, ointment, and emollient manufacturing. CAS to be confirmed against supplier CoA — related compounds include Clobetasol Propionate (25122-41-2) and Clobetasone Butyrate (25122-57-0).',
+      },
+      {
+        id: 'ste-004',
+        slug: 'fluocinolone-acetonide',
+        name: 'Fluocinolone Acetonide',
+        casNumber: '67-73-2',
+        shortDescription:
+          'Mid-potency fluorinated corticosteroid in USP/EP/BP grade for topical, otic, and ophthalmic formulation manufacturing. Exported for dermatitis, psoriasis, eczema, and otitis externa therapeutic product lines.',
+      },
+      {
+        id: 'ste-005',
+        slug: 'hydrocortisone-base-acetate',
+        name: 'Hydrocortisone Base / Acetate',
+        casNumber: '50-23-7 / 50-03-3',
+        shortDescription:
+          'Natural corticosteroid supplied as free base (50-23-7) and acetate ester (50-03-3) — USP/EP/BP grade — for oral tablet, topical cream, suppository, and injectable depot formulation manufacturing across adrenal and inflammatory indications.',
+      },
+      {
+        id: 'ste-006',
+        slug: 'hydrocortisone-sodium-succinate',
+        name: 'Hydrocortisone Sodium Succinate',
+        casNumber: '125-04-2',
+        shortDescription:
+          'Water-soluble injectable corticosteroid API in USP/EP grade for lyophilised powder-for-injection manufacturing. Sourced for emergency IV/IM protocols — anaphylaxis, acute adrenal crisis, and severe inflammatory episodes.',
+      },
+      {
+        id: 'ste-007',
+        slug: 'methylprednisolone-base-acetate',
+        name: 'Methyl Prednisolone Base / Acetate',
+        casNumber: '83-43-2 / 53-36-1',
+        shortDescription:
+          'Synthetic glucocorticoid supplied as oral-grade base (83-43-2) and depot-injectable acetate ester (53-36-1) — USP/EP/BP grade. Exported for tablet, intra-articular suspension, and IM depot formulation lines in rheumatological and autoimmune indications.',
+      },
+      {
+        id: 'ste-008',
+        slug: 'methylprednisolone-sodium-succinate',
+        name: 'Methyl Prednisolone Sodium Succinate',
+        casNumber: '2375-03-3',
+        shortDescription:
+          'High-potency water-soluble IV corticosteroid in USP/EP grade for lyophilised powder-for-injection manufacturing. Sourced for pulse therapy in acute spinal cord injury, transplant rejection prophylaxis, and severe asthma protocols.',
+      },
+      {
+        id: 'ste-009',
+        slug: 'mometasone-furoate',
+        name: 'Mometasone Furoate',
+        casNumber: '83919-23-7',
+        shortDescription:
+          'High-potency non-halogenated glucocorticoid in USP/EP/BP grade for nasal spray, dry powder inhaler, and topical formulation manufacturing. Exported for allergic rhinitis, persistent asthma, and dermatological treatment product lines.',
+      },
+      {
+        id: 'ste-010',
+        slug: 'prednisolone-base-acetate',
+        name: 'Prednisolone Base / Acetate',
+        casNumber: '50-24-8 / 52-21-1',
+        shortDescription:
+          'Versatile synthetic glucocorticoid supplied as oral-grade base (50-24-8) and ophthalmic-grade acetate (52-21-1) — USP/EP/BP. Exported for tablet, syrup, and ophthalmic suspension formulations across inflammatory, autoimmune, and ocular indications.',
+      },
+      {
+        id: 'ste-011',
+        slug: 'triamcinolone-base-acetonide',
+        name: 'Triamcinolone Base / Acetonide',
+        casNumber: '124-94-7 / 76-25-5',
+        shortDescription:
+          'Fluorinated corticosteroid supplied as free base (124-94-7) and acetonide ester (76-25-5) — USP/EP/BP grade — for topical, intra-articular injectable, nasal spray, and inhaled formulation manufacturing across dermatological, rheumatological, and respiratory indications.',
+      },
     ],
   },
   {
