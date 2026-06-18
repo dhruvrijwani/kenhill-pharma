@@ -161,7 +161,7 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
                             {currentSub.type === 'two-btn' && (
                               <div className="flex flex-col gap-1">
                                 <button
-                                  onClick={() => handleNav('contact', { product: `${hoveredProduct}: Human` })}
+                                  onClick={() => hoveredProduct === 'apis' ? handleNav('human-apis') : handleNav('contact', { product: `${hoveredProduct}: Human` })}
                                   className="text-left text-sm font-medium text-text-dark hover:text-primary py-2 px-3 rounded-lg hover:bg-surface transition-all"
                                 >
                                   Human
@@ -295,7 +295,7 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
                                   {item.sub.type === 'two-btn' && (
                                     <div className="flex flex-col gap-1 pt-1">
                                       <button
-                                        onClick={() => handleNav('contact', { product: `${item.key}: Human` })}
+                                        onClick={() => item.key === 'apis' ? handleNav('human-apis') : handleNav('contact', { product: `${item.key}: Human` })}
                                         className="block text-left w-full text-sm text-text-dark hover:text-primary py-1.5"
                                       >
                                         • Human

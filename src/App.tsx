@@ -8,6 +8,8 @@ import APIProductsView from './views/APIProductsView';
 import IntermediatesView from './views/IntermediatesView';
 import ProductDetailView from './views/ProductDetailView';
 import APIDetailView from './views/APIDetailView';
+import HumanAPIsView from './views/HumanAPIsView';
+import HumanAPICategoryView from './views/HumanAPICategoryView';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function App() {
@@ -73,9 +75,18 @@ export default function App() {
         );
       case 'api-detail':
         return (
-          <APIDetailView 
-            slug={route.params.slug || 'alendronate-sodium'} 
-            navigate={navigate} 
+          <APIDetailView
+            slug={route.params.slug || 'alendronate-sodium'}
+            navigate={navigate}
+          />
+        );
+      case 'human-apis':
+        return <HumanAPIsView navigate={navigate} />;
+      case 'human-api-category':
+        return (
+          <HumanAPICategoryView
+            categorySlug={route.params.category || 'steroids'}
+            navigate={navigate}
           />
         );
       case 'home':

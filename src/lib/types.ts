@@ -89,6 +89,43 @@ export interface Intermediate {
   }[];
 }
 
+export interface SimpleAPIProduct {
+  slug: string;
+  name: string;
+  casNumber: string;
+  shortDescription: string;
+  overview: string;
+  therapeuticUse: string;
+  industryApplication: string;
+  exportAvailability: string;
+  applications: string[];
+}
+
+export interface APICategory {
+  slug: string;
+  name: string;
+  description: string;
+  shortDescription: string;
+  image: string;
+  products: SimpleAPIProduct[];
+}
+
+export interface HumanAPIProduct {
+  id: string;
+  slug: string;
+  name: string;
+  casNumber: string;
+  shortDescription: string;
+}
+
+export interface HumanAPICategory {
+  slug: string;
+  name: string;
+  description: string;
+  image: string;
+  products: HumanAPIProduct[];
+}
+
 export interface PharmProduct {
   id: string;
   slug: string;
