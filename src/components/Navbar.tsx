@@ -9,12 +9,6 @@ interface NavbarProps {
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
-const intermediateItems = [
-  '5-Chloro-4-Amino-2,1,3-Benzothiadiazole',
-  '2,3,4-Trimethoxy Benzaldehyde',
-  '3-Dibenzyl Phosphono',
-];
-
 const chemicalItems = ['API Chemicals', 'DIES Chemical', 'Agro Chemical', 'Pigments'];
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -29,7 +23,7 @@ type SubItem =
 const productMenu: { key: ProductKey; label: string; sub: SubItem }[] = [
   { key: 'formulation',      label: 'Formulation',      sub: { type: 'two-btn' } },
   { key: 'apis',             label: 'APIs',             sub: { type: 'two-btn' } },
-  { key: 'intermediates',    label: 'Intermediates',    sub: { type: 'list', items: intermediateItems } },
+  { key: 'intermediates',    label: 'Intermediates',    sub: { type: 'direct' } },
   { key: 'chemicals',        label: 'Chemicals',        sub: { type: 'list', items: chemicalItems } },
   { key: 'industrial-salts', label: 'Industrial Salts', sub: { type: 'direct' } },
   { key: 'solvents',         label: 'Solvents',         sub: { type: 'direct' } },
@@ -131,7 +125,11 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
                             key={item.key}
                             onMouseEnter={() => setHoveredProduct(item.key)}
                             onClick={() => {
-                              if (item.sub.type === 'direct') handleNav('contact', { product: item.label });
+                              if (item.sub.type === 'direct') {
+                                if (item.key === 'intermediates') handleNav('intermediates');
+                                else if (item.key === 'solvents') handleNav('solvents');
+                                else handleNav('contact', { product: item.label });
+                              }
                             }}
                             className={`w-full flex items-center justify-between px-4 py-2.5 text-sm font-medium transition-colors ${
                               hoveredProduct === item.key
@@ -271,7 +269,9 @@ export default function Navbar({ currentPath, navigate }: NavbarProps) {
                             <button
                               onClick={() => {
                                 if (item.sub.type === 'direct') {
-                                  handleNav('contact', { product: item.label });
+                                  if (item.key === 'intermediates') handleNav('intermediates');
+                                  else if (item.key === 'solvents') handleNav('solvents');
+                                  else handleNav('contact', { product: item.label });
                                 } else {
                                   setMobileSubOpen(s => s === item.key ? null : item.key);
                                 }

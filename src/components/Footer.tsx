@@ -61,6 +61,11 @@ export default function Footer({ navigate }: FooterProps) {
                 </button>
               </li>
               <li>
+                <button onClick={() => navigate('solvents')} className="hover:text-white transition-colors">
+                  Solvents
+                </button>
+              </li>
+              <li>
                 <button onClick={() => navigate('contact')} className="hover:text-white transition-colors">
                   Contact & Sourcing Help
                 </button>
@@ -111,7 +116,7 @@ export default function Footer({ navigate }: FooterProps) {
               <li className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                 <span className="leading-relaxed">
-                  K10 Tower A, Floor No. 512, Grand Sarabhai Compound, Behind Genda Circle, Vadodara – 390007, Gujarat, India
+                  A/1113 Siddhivinayak Tower, Near Kataria Arcade, Ahmedabad, Gujarat, India
                 </span>
               </li>
               <li className="flex items-center space-x-3">

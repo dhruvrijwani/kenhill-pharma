@@ -110,6 +110,22 @@ export interface APICategory {
   products: SimpleAPIProduct[];
 }
 
+export interface SolventProduct {
+  id: string;
+  slug: string;
+  name: string;
+  casNumber: string;
+  description: string;
+}
+
+export interface IntermediateQuickRef {
+  id: string;
+  slug: string;
+  name: string;
+  casNumber: string;
+  endUse: string;
+}
+
 export interface HumanAPIProduct {
   id: string;
   slug: string;

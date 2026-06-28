@@ -85,7 +85,7 @@ export default function ContactView({ navigate }: ContactViewProps) {
                 <li className="flex items-start space-x-3.5">
                   <MapPin className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                   <span className="leading-relaxed">
-                    K10 Tower A, Floor No. 512, Grand Sarabhai Compound, Behind Genda Circle, Vadodara – 390007, Gujarat, India
+                    A/1113 Siddhivinayak Tower, Near Kataria Arcade, Ahmedabad, Gujarat, India
                   </span>
                 </li>
                 <li className="flex items-start space-x-3.5">
@@ -263,27 +263,16 @@ export default function ContactView({ navigate }: ContactViewProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-4 space-y-4">
               <span className="text-[10px] uppercase tracking-widest text-accent font-bold">Geographic Coordination</span>
-              <h3 className="text-xl font-bold text-text-dark leading-tight">Our Central Vadodara Trade Registry</h3>
+              <h3 className="text-xl font-bold text-text-dark leading-tight">Our Ahmedabad Trade Registry</h3>
               <p className="text-xs text-text-muted leading-relaxed">
                 We are strategically positioned inside Gujarat's prime industrial chemical trade zone. Access to multiple highways and container consolidation ports streamlines continuous cargo transport logistics.
               </p>
-              
-              <div className="pt-2 space-y-2 text-2xs text-text-dark font-medium">
-                <div className="flex items-center space-x-2">
-                  <span className="w-2 h-2 rounded-full bg-primary"></span>
-                  <span>Vadodara Airport — 15 Mins distance</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="w-2 h-2 rounded-full bg-primary"></span>
-                  <span>Port of Kandla Consolidation Hub — Integrated</span>
-                </div>
-              </div>
             </div>
 
             <div className="lg:col-span-8 bg-surface rounded-2xl border border-border-custom p-6 space-y-4">
               <div className="flex items-center justify-between border-b border-border-custom pb-2">
                 <span className="text-3xs uppercase tracking-wider text-text-muted font-bold">Visual Navigation Coordinates</span>
-                <span className="text-3xs bg-primary/10 text-primary font-bold px-2 py-0.5 rounded">VADODARA HQ</span>
+                <span className="text-3xs bg-primary/10 text-primary font-bold px-2 py-0.5 rounded">AHMEDABAD HQ</span>
               </div>
 
               {/* Styled mock map representation with exact address overlay */}
@@ -291,11 +280,10 @@ export default function ContactView({ navigate }: ContactViewProps) {
                 <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#1A3A6B_1px,transparent_1px)] [background-size:12px_12px] pointer-events-none"></div>
                 <MapPin className="w-10 h-10 text-accent mx-auto animate-bounce" />
                 <div>
-                  <h4 className="font-bold text-text-dark text-sm">Grand Sarabhai Circle Zone</h4>
-                  <p className="text-3xs mt-1">Latitude: 22.3168° N, Longitude: 73.1709° E</p>
+                  <h4 className="font-bold text-text-dark text-sm">Siddhivinayak Tower, Kataria Arcade</h4>
                 </div>
                 <p className="text-3xs max-w-sm mx-auto leading-relaxed">
-                  K10 Tower A, Floor No. 512, Grand Sarabhai Compound, Behind Genda Circle, Vadodara – 390007, Gujarat, India.
+                  A/1113 Siddhivinayak Tower, Near Kataria Arcade, Ahmedabad, Gujarat, India.
                 </p>
               </div>
             </div>

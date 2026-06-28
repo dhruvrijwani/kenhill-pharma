@@ -10,6 +10,7 @@ import ProductDetailView from './views/ProductDetailView';
 import APIDetailView from './views/APIDetailView';
 import HumanAPIsView from './views/HumanAPIsView';
 import HumanAPICategoryView from './views/HumanAPICategoryView';
+import SolventsView from './views/SolventsView';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function App() {
@@ -18,40 +19,38 @@ export default function App() {
     params: {} as Record<string, string>
   });
 
-  // Handle hash route changes
+  // Handle path-based route changes (History API)
   useEffect(() => {
-    const parseHash = () => {
-      const hash = window.location.hash || '#home';
-      // format: #view?category=X&slug=Y
-      const [viewWithHash, queryString] = hash.split('?');
-      const view = viewWithHash.replace('#', '') || 'home';
-      
+    const parseLocation = () => {
+      // format: /view?category=X&slug=Y
+      const view = window.location.pathname.replace(/^\//, '').split('/')[0] || 'home';
+
       const params: Record<string, string> = {};
-      if (queryString) {
-        const urlParams = new URLSearchParams(queryString);
-        urlParams.forEach((val, key) => {
-          params[key] = val;
-        });
-      }
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.forEach((val, key) => {
+        params[key] = val;
+      });
       setRoute({ view, params });
-      
+
       // Buttery smooth transition scroll back to top of document
       window.scrollTo({ top: 0, behavior: 'instant' as any });
     };
 
-    window.addEventListener('hashchange', parseHash);
-    parseHash(); // Initial call
-    return () => window.removeEventListener('hashchange', parseHash);
+    window.addEventListener('popstate', parseLocation);
+    parseLocation(); // Initial call
+    return () => window.removeEventListener('popstate', parseLocation);
   }, []);
 
-  // Update hash path to execute routing
+  // Push a new path to execute routing
   const navigate = (view: string, searchParams?: Record<string, string>) => {
-    let hash = `#${view}`;
+    let path = `/${view === 'home' ? '' : view}`;
     if (searchParams) {
       const urlParams = new URLSearchParams(searchParams);
-      hash += `?${urlParams.toString()}`;
+      const query = urlParams.toString();
+      if (query) path += `?${query}`;
     }
-    window.location.hash = hash;
+    window.history.pushState(null, '', path);
+    window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
   // Render correct view block
@@ -89,6 +88,8 @@ export default function App() {
             navigate={navigate}
           />
         );
+      case 'solvents':
+        return <SolventsView navigate={navigate} />;
       case 'home':
       default:
         return <HomeView navigate={navigate} />;
